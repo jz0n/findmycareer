@@ -33,23 +33,3 @@ careers = [
     {"name": "Marketing Specialist", "tags": ["creative", "people"], "desc": "Promote products.", "icon": "📣"},
     {"name": "Journalist", "tags": ["creative", "people"], "desc": "Report news.", "icon": "📰"},
 ]
-
-questions = [
-    {"question": "Do you enjoy working with people?", "tag": "people", "weight": 3},
-    {"question": "Do you like helping others solve problems?", "tag": "people", "weight": 2},
-
-    {"question": "Do you enjoy math and logical thinking?", "tag": "math", "weight": 3},
-    {"question": "Do you like solving puzzles or coding?", "tag": "tech", "weight": 3},
-
-    {"question": "Are you creative and enjoy making things?", "tag": "creative", "weight": 3},
-    {"question": "Do you enjoy drawing, music, or design?", "tag": "creative", "weight": 2},
-
-    {"question": "Do you like working outdoors?", "tag": "outdoor", "weight": 3},
-    {"question": "Do you prefer hands-on physical work?", "tag": "outdoor", "weight": 2},
-
-    {"question": "Are you interested in science or biology?", "tag": "science", "weight": 3},
-    {"question": "Do you enjoy experiments or research?", "tag": "science", "weight": 2},
-
-    {"question": "Do you like using computers and technology?", "tag": "tech", "weight": 3},
-    {"question": "Do you enjoy building or fixing things?", "tag": "math", "weight": 2},
-]

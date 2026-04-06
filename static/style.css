@@ -111,6 +111,18 @@ h1 {
     margin: 10px 0;
 }
 
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+
+    font-size: 10px;
+
+    background: #fff8dc;
+    border: 3px solid black;
+    box-shadow: 4px 4px 0 black;
+}
+
 /* 📱 MOBILE OPTIMIZATION */
 @media (max-width: 600px) {
 

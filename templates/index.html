@@ -25,7 +25,7 @@
         <button class="btn yes" onclick="answer('yes')">YES</button>
         <button class="btn no" onclick="answer('no')">NO</button>
     </div>
-    
+
     <button class="btn reset" onclick="restart()">RESET</button>
 
     <div id="grid">
@@ -86,6 +86,8 @@ function restart() {
     fetch('/reset').then(() => location.reload());
 }
 </script>
-
+<div class="footer">
+    <p>Designed by Teacher ANZ</p>
+</div>
 </body>
 </html>
