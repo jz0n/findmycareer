@@ -66,11 +66,12 @@ function answer(choice) {
     .then(res => res.json())
     .then(data => {
 
-        console.log(data); // debug
+        console.log("RESPONSE:", data);
 
         // 🏁 FINISHED
         if (data.done) {
             document.getElementById("question").innerText = "🏆 Your Career:";
+
             document.querySelector(".buttons").style.display = "none";
 
             let result = document.getElementById("result");
@@ -86,10 +87,12 @@ function answer(choice) {
         }
 
         // 🧠 UPDATE QUESTION
-        document.getElementById("question").innerText = data.question;
+        if (data.question) {
+            document.getElementById("question").innerText = data.question;
+        }
 
-        // 🎯 UPDATE GRID
-        if (data.careers) {
+        // 🎯 SAFE GRID UPDATE (THIS FIXES YOUR BUG)
+        if (Array.isArray(data.careers)) {
             document.querySelectorAll(".card").forEach(card => {
                 let name = card.dataset.name;
 
@@ -103,7 +106,9 @@ function answer(choice) {
         }
 
     })
-    .catch(err => console.error("ERROR:", err));
+    .catch(err => {
+        console.error("FETCH ERROR:", err);
+    });
 }
 
 function restart() {
