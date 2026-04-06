@@ -18,12 +18,9 @@
 
 <body>
 
-<div id="start-screen" class="start-screen">
-    <h1>🌾 FindMyCareer</h1>
-    <button class="btn start-btn" onclick="startGame()">START</button>
-</div>
 
-<div id="game-ui" class="app" style="display: none;">
+
+<div id="game-ui" class="app">
 
     <h1>🌾 FindMyCareer</h1>
 
@@ -52,10 +49,6 @@
 </div>
 
 <script>
-function startGame() {
-    document.getElementById("start-screen").style.display = "none";
-    document.getElementById("game-ui").style.display = "block";
-}
 
 function answer(choice) {
     fetch('/answer', {
