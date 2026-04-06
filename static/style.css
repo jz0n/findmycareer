@@ -123,6 +123,37 @@ h1 {
     box-shadow: 4px 4px 0 black;
 }
 
+.start-screen {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.start-btn {
+    font-size: 20px;
+    padding: 20px 40px;
+    background: #ffd700;
+    border: 4px solid black;
+    box-shadow: 4px 4px 0 black;
+}
+
+.start-btn:hover {
+    filter: brightness(1.1);
+}
+
+.start-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+.start-screen h1 {
+    animation: float 2s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
 /* 📱 MOBILE OPTIMIZATION */
 @media (max-width: 600px) {
 

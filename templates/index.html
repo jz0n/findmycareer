@@ -13,12 +13,17 @@
 </head>
 <body>
 
-<div class="app">
+<div id="start-screen" class="start-screen">
+    <h1>🌾 FindMyCareer</h1>
+    <button class="btn start-btn" onclick="startGame()">START</button>
+</div>
+
+<div id="game-ui" style="display: none;">
 
     <h1>🌾 FindMyCareer</h1>
 
     <div class="dialogue">
-        <p id="question">{{ question.question }}</p>
+        <p id="question">{{ question }}</p>
     </div>
 
     <div class="buttons">
@@ -40,8 +45,12 @@
     <div id="result"></div>
 
 </div>
-
 <script>
+
+function startGame() {
+    document.getElementById("start-screen").style.display = "none";
+    document.getElementById("game-ui").style.display = "block";
+}
 function answer(choice) {
     fetch('/answer', {
         method: 'POST',

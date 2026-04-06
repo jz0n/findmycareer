@@ -24,11 +24,28 @@ def new_game():
 
 state = new_game()
 
-
 @app.route("/")
 def home():
-    first_question = "Answer a few questions to find your career!"
-    return render_template("index.html", careers=careers, question=first_question)
+    global state
+
+    # Reset game state
+    state = new_game()
+
+    # Pick best starting tag (most common across careers)
+    tag_counts = {}
+    for c in careers:
+        for tag in c["tags"]:
+            tag_counts[tag] = tag_counts.get(tag, 0) + 1
+
+    first_tag = max(tag_counts, key=tag_counts.get)
+
+    # Save it as first question
+    state["last_tag"] = first_tag
+    state["asked_tags"].add(first_tag)
+
+    question = tag_questions.get(first_tag, "Do you enjoy this type of work?")
+
+    return render_template("index.html", careers=careers, question=question)
 
 
 @app.route("/answer", methods=["POST"])
