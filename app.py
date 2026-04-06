@@ -24,42 +24,51 @@ def answer():
     data = request.json
     choice = data["answer"]
 
-    # Safety check
     if state["index"] >= len(questions):
         return jsonify({"done": True})
 
-    tag = questions[state["index"]]["tag"]
+    q = questions[state["index"]]
+    tag = q["tag"]
+    weight = q["weight"]
 
-    # Score careers
     for c in careers:
-        if tag in c["tags"]:
+        tags = c["tags"]
+
+        if tag in tags:
             if choice == "yes":
-                state["scores"][c["name"]] += 1
+                state["scores"][c["name"]] += weight * 3
             else:
-                state["scores"][c["name"]] -= 0.5
+                state["scores"][c["name"]] -= weight * 2
+        else:
+            if choice == "yes":
+                state["scores"][c["name"]] -= 1
 
     state["index"] += 1
 
-    # Sort careers
     sorted_list = sorted(state["scores"].items(), key=lambda x: x[1], reverse=True)
-    top_names = [c[0] for c in sorted_list[:10]]
-    filtered = [c for c in careers if c["name"] in top_names]
 
-    # End condition
+    best_name, best_score = sorted_list[0]
+
+    total_possible = sum(q["weight"] * 3 for q in questions)
+    confidence = int((best_score / total_possible) * 100)
+
+    best_career = next(c for c in careers if c["name"] == best_name)
+    best_career["match"] = max(0, confidence)
+
     if state["index"] >= len(questions):
-        best = [c for c in careers if c["name"] in [x[0] for x in sorted_list[:3]]]
-
         return jsonify({
             "done": True,
-            "careers": best
+            "career": best_career
         })
+
+    top_names = [c[0] for c in sorted_list[:10]]
+    filtered = [c for c in careers if c["name"] in top_names]
 
     return jsonify({
         "done": False,
         "careers": filtered,
         "question": questions[state["index"]]["question"]
     })
-
 
 @app.route("/reset")
 def reset():

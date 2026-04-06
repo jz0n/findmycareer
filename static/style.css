@@ -32,27 +32,40 @@ h1 {
 /* Buttons */
 .buttons {
     display: flex;
-    gap: 10px;
+    gap: 12px;
+    margin-top: 15px;
 }
 
 .btn {
     flex: 1;
-    padding: 15px;
-    border: 3px solid black;
+    padding: 18px;
+    font-size: 16px;
+    border: 4px solid black;
     background: #fff8dc;
     cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 4px 4px 0 black;
+    transition: 0.1s;
+}
+
+.yes {
+    background: #4CAF50;
+    color: white;
+}
+
+.no {
+    background: #f44336;
+    color: white;
+}
+
+.btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
 }
 
 .btn:hover {
-    background: #ffd700;
-}
-
-.reset-btn {
-    width: 100%;
-    margin-top: 10px;
-    padding: 12px;
-    border: 3px solid black;
-    background: #87ceeb;
+    filter: brightness(1.1);
 }
 
 /* Grid */
