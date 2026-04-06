@@ -5,11 +5,17 @@ body {
     color: #2d2d2d;
 }
 
-/* Container */
+/* 🎮 MAIN FRAME (UPDATED) */
 .app {
     max-width: 900px;
-    margin: auto;
-    padding: 15px;
+    margin: 40px auto;              /* 👈 adds spacing from edges */
+    padding: 20px;
+
+    background: #fff8dc;            /* 👈 gives "inside" feel */
+    border: 4px solid black;
+    box-shadow: 6px 6px 0 black;    /* 👈 stronger frame */
+
+    border-radius: 4px;
 }
 
 /* Title */
@@ -19,12 +25,12 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Dialogue box */
+/* 🎯 Dialogue box (more spacing) */
 .dialogue {
     background: #f5deb3;
     border: 4px solid #2d2d2d;
     padding: 15px;
-    margin-bottom: 15px;
+    margin: 20px 0;                 /* 👈 better spacing */
     text-align: center;
     line-height: 1.6;
 }
@@ -33,7 +39,7 @@ h1 {
 .buttons {
     display: flex;
     gap: 12px;
-    margin-top: 15px;
+    margin: 20px 0;                 /* 👈 spacing fix */
 }
 
 .btn {
@@ -75,19 +81,20 @@ h1 {
     padding: 12px;
     margin-top: 10px;
 }
-/* Grid */
+
+/* 📊 Grid (more spacing) */
 #grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 20px;
+    gap: 12px;
+    margin-top: 25px;               /* 👈 spacing fix */
 }
 
 /* Cards */
 .card {
     background: #fff8dc;
     border: 3px solid black;
-    padding: 10px;
+    padding: 12px;                  /* 👈 slightly bigger */
     text-align: center;
 }
 
@@ -103,29 +110,31 @@ h1 {
     transition: 0.2s;
 }
 
-/* Results */
+/* 🏆 Result (centered + framed) */
 .result-card {
     background: #fff8dc;
     border: 3px solid black;
-    padding: 12px;
-    margin: 10px 0;
+    padding: 15px;
+    margin: 20px auto;              /* 👈 centered */
+    width: 70%;
+    box-shadow: 4px 4px 0 black;
 }
 
+/* Footer */
 .footer {
     text-align: center;
     margin-top: 40px;
     padding: 20px;
-
     font-size: 10px;
-
     background: #fff8dc;
     border: 3px solid black;
     box-shadow: 4px 4px 0 black;
 }
 
+/* 🎮 START SCREEN (center better) */
 .start-screen {
     text-align: center;
-    margin-top: 100px;
+    margin-top: 120px;
 }
 
 .start-btn {
@@ -157,6 +166,11 @@ h1 {
 /* 📱 MOBILE OPTIMIZATION */
 @media (max-width: 600px) {
 
+    .app {
+        margin: 10px;
+        padding: 10px;
+    }
+
     h1 {
         font-size: 12px;
     }
@@ -180,5 +194,9 @@ h1 {
 
     .icon {
         font-size: 16px;
+    }
+
+    .result-card {
+        width: 100%;                /* 👈 full width on mobile */
     }
 }

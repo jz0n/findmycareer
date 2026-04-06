@@ -18,7 +18,7 @@
     <button class="btn start-btn" onclick="startGame()">START</button>
 </div>
 
-<div id="game-ui" style="display: none;">
+<div id="game-ui" class="app" style="display: none;">
 
     <h1>🌾 FindMyCareer</h1>
 
@@ -51,6 +51,7 @@ function startGame() {
     document.getElementById("start-screen").style.display = "none";
     document.getElementById("game-ui").style.display = "block";
 }
+
 function answer(choice) {
     fetch('/answer', {
         method: 'POST',
@@ -60,34 +61,39 @@ function answer(choice) {
     .then(res => res.json())
     .then(data => {
 
+        // 🏁 FINISHED STATE
+        if (data.done) {
+
+            // Update question text
+            document.getElementById("question").innerText = "🏆 Your Career:";
+
+            // Hide buttons so user can't click again
+            document.querySelector(".buttons").style.display = "none";
+
+            // Show result
+            let result = document.getElementById("result");
+            result.innerHTML = `
+                <div class="result-card">
+                    <div class="icon">${data.career.icon}</div>
+                    <h3>${data.career.name}</h3>
+                    <p>${data.career.desc}</p>
+                </div>
+            `;
+
+            return; // 🔥 STOP HERE
+        }
+
+        // 🧠 NORMAL FLOW
+        document.getElementById("question").innerText = data.question;
+
+        // Update visible careers
         document.querySelectorAll(".card").forEach(card => {
             let name = card.dataset.name;
 
-            if (!data.careers?.some(c => c.name === name)) {
-                card.classList.add("fade");
-                setTimeout(() => card.remove(), 200);
+            if (!data.careers.some(c => c.name === name)) {
+                card.style.display = "none";
             }
         });
-
-        if (data.done) {
-            let result = document.getElementById("result");
-            result.innerHTML = "<h2>🏆 Your Careers:</h2>";
-
-            data.careers.forEach(c => {
-                result.innerHTML += `
-                    <div class="result-card">
-                        <div class="icon">${c.icon}</div>
-                        <h3>${c.name}</h3>
-                        <p>${c.desc}</p>
-                        <p>${c.match || 100}% Match</p>
-                    </div>
-                `;
-            });
-
-            document.getElementById("question").innerText = "Game Complete!";
-        } else {
-            document.getElementById("question").innerText = data.question;
-        }
     });
 }
 
