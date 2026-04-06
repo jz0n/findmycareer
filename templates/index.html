@@ -8,11 +8,14 @@
 
     <link rel="stylesheet" href="/static/style.css">
 
-    <!-- Responsive scaling -->
+    <!-- Responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon -->
     <link rel="icon" href="/static/favicon.png">
-<link rel="shortcut icon" href="/static/favicon.png">
+    <link rel="shortcut icon" href="/static/favicon.png">
 </head>
+
 <body>
 
 <div id="start-screen" class="start-screen">
@@ -47,8 +50,8 @@
     <div id="result"></div>
 
 </div>
-<script>
 
+<script>
 function startGame() {
     document.getElementById("start-screen").style.display = "none";
     document.getElementById("game-ui").style.display = "block";
@@ -63,18 +66,14 @@ function answer(choice) {
     .then(res => res.json())
     .then(data => {
 
-        // 🏁 FINISHED STATE
+        console.log(data); // debug
+
+        // 🏁 FINISHED
         if (data.done) {
-
-            // Update question text
             document.getElementById("question").innerText = "🏆 Your Career:";
-
-            // Hide buttons so user can't click again
             document.querySelector(".buttons").style.display = "none";
 
-            // Show result
             let result = document.getElementById("result");
-
             result.innerHTML = `
                 <div class="result-card big-result">
                     <div class="icon big-icon">${data.career.icon}</div>
@@ -83,32 +82,38 @@ function answer(choice) {
                     <p>${data.career.desc}</p>
                 </div>
             `;
-
-            return; // 🔥 STOP HERE
+            return;
         }
 
-        // 🧠 NORMAL FLOW
+        // 🧠 UPDATE QUESTION
         document.getElementById("question").innerText = data.question;
 
-        // Update visible careers
-        document.querySelectorAll(".card").forEach(card => {
-            let name = card.dataset.name;
+        // 🎯 UPDATE GRID
+        if (data.careers) {
+            document.querySelectorAll(".card").forEach(card => {
+                let name = card.dataset.name;
 
-            if (!data.careers || !data.careers.some(c => c.name === name)) {
-                card.classList.add("fade");
-                setTimeout(() => {
-                    card.style.display = "none";
-                }, 200);
-            }
-        });
+                if (!data.careers.some(c => c.name === name)) {
+                    card.classList.add("fade");
+                    setTimeout(() => {
+                        card.style.display = "none";
+                    }, 200);
+                }
+            });
+        }
+
+    })
+    .catch(err => console.error("ERROR:", err));
 }
 
 function restart() {
     fetch('/reset').then(() => location.reload());
 }
 </script>
+
 <div class="footer">
-    <p>Designed by Teacher ANZ | JZON 2026 </p>
+    <p>Designed by Teacher ANZ | JZON 2026</p>
 </div>
+
 </body>
 </html>
