@@ -74,10 +74,12 @@ function answer(choice) {
 
             // Show result
             let result = document.getElementById("result");
+
             result.innerHTML = `
-                <div class="result-card">
-                    <div class="icon">${data.career.icon}</div>
-                    <h3>${data.career.name}</h3>
+                <div class="result-card big-result">
+                    <div class="icon big-icon">${data.career.icon}</div>
+                    <h2>🏆 YOUR CAREER</h2>
+                    <h1 class="career-name">${data.career.name}</h1>
                     <p>${data.career.desc}</p>
                 </div>
             `;
@@ -92,11 +94,13 @@ function answer(choice) {
         document.querySelectorAll(".card").forEach(card => {
             let name = card.dataset.name;
 
-            if (!data.careers.some(c => c.name === name)) {
-                card.style.display = "none";
+            if (!data.careers || !data.careers.some(c => c.name === name)) {
+                card.classList.add("fade");
+                setTimeout(() => {
+                    card.style.display = "none";
+                }, 200);
             }
         });
-    });
 }
 
 function restart() {

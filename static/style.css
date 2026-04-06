@@ -88,10 +88,14 @@ h1 {
 
 /* 📊 Grid (more spacing) */
 #grid {
+#grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 12px;
-    margin-top: 25px;               /* 👈 spacing fix */
+    margin-top: 20px;
+
+    overflow: hidden;  /* 👈 prevents spill */
+}
 }
 
 /* Cards */
@@ -204,4 +208,32 @@ h1 {
     .result-card {
         width: 100%;                /* 👈 full width on mobile */
     }
+}
+
+/* 🎯 BIG RESULT */
+.big-result {
+    text-align: center;
+    margin: 30px auto;
+    padding: 25px;
+
+    border: 4px solid black;
+    background: #fff8dc;
+    box-shadow: 6px 6px 0 black;
+
+    animation: pop 0.3s ease;
+}
+
+.big-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.career-name {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+@keyframes pop {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
