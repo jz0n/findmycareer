@@ -63,19 +63,35 @@ function answer(choice) {
 
         // 🏁 FINISHED
         if (data.done) {
-            document.getElementById("question").innerText = "🏆 Your Career:";
 
+            document.getElementById("question").innerText = "🏆 Your Career:";
             document.querySelector(".buttons").style.display = "none";
 
             let result = document.getElementById("result");
+
+            // 🔥 Other careers support
+            let othersHTML = "";
+            if (Array.isArray(data.others)) {
+                othersHTML = `
+                    <h3>Other Possible Careers:</h3>
+                    <div class="alt-careers">
+                        ${data.others.map(c => `
+                            <div class="alt-card">${c.icon} ${c.name}</div>
+                        `).join("")}
+                    </div>
+                `;
+            }
+
             result.innerHTML = `
                 <div class="result-card big-result">
                     <div class="icon big-icon">${data.career.icon}</div>
                     <h2>🏆 YOUR CAREER</h2>
                     <h1 class="career-name">${data.career.name}</h1>
                     <p>${data.career.desc}</p>
+                    ${othersHTML}
                 </div>
             `;
+
             return;
         }
 
@@ -84,12 +100,15 @@ function answer(choice) {
             document.getElementById("question").innerText = data.question;
         }
 
-        // 🎯 SAFE GRID UPDATE (THIS FIXES YOUR BUG)
+        // 🎯 GRID UPDATE (smooth + reversible)
         if (Array.isArray(data.careers)) {
             document.querySelectorAll(".card").forEach(card => {
                 let name = card.dataset.name;
 
-                if (!data.careers.some(c => c.name === name)) {
+                if (data.careers.some(c => c.name === name)) {
+                    card.style.display = "flex";   // 🔥 better layout
+                    card.classList.remove("fade");
+                } else {
                     card.classList.add("fade");
                     setTimeout(() => {
                         card.style.display = "none";

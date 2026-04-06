@@ -181,6 +181,36 @@ h1 {
     50% { transform: translateY(-8px); }
 }
 
+/* Prevent wrapping */
+.card .name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Make boxes consistent size */
+.card {
+    height: 90px;              /* fixed height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.alt-careers {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.alt-card {
+    padding: 8px 10px;
+    border: 2px solid black;
+    background: #fff;
+    font-size: 10px;
+}
+
 /* 📱 MOBILE */
 @media (max-width: 600px) {
 

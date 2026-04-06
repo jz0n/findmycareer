@@ -116,24 +116,25 @@ def answer():
 def finish():
     global state
 
-    best = None
-    best_score = -999
+    scored = []
 
     for c in careers:
         score = 0
         for t, v in c["riasec"].items():
             score += state["scores"][t] * v
+        scored.append((c, score))
 
-        if score > best_score:
-            best_score = score
-            best = c
+    scored.sort(key=lambda x: x[1], reverse=True)
+
+    best = scored[0][0]
+    others = [c[0] for c in scored[1:4]]  # 👈 top 3 alternatives
 
     state["finished"] = True
 
     return jsonify({
         "done": True,
         "career": best,
-        "careers": []   # clears grid
+        "others": others
     })
 
 
