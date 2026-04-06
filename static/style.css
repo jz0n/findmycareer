@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    font-family: 'Press Start 2P', cursive;
+    background: #87c77b;
+    color: #2d2d2d;
+}
+
+/* Container */
+.app {
+    max-width: 900px;
+    margin: auto;
+    padding: 15px;
+}
+
+/* Title */
+h1 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Dialogue box */
+.dialogue {
+    background: #f5deb3;
+    border: 4px solid #2d2d2d;
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    flex: 1;
+    padding: 15px;
+    border: 3px solid black;
+    background: #fff8dc;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #ffd700;
+}
+
+.reset-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border: 3px solid black;
+    background: #87ceeb;
+}
+
+/* Grid */
+#grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Cards */
+.card {
+    background: #fff8dc;
+    border: 3px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+.icon {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+/* Fade */
+.fade {
+    opacity: 0;
+    transform: scale(0.7);
+    transition: 0.2s;
+}
+
+/* Results */
+.result-card {
+    background: #fff8dc;
+    border: 3px solid black;
+    padding: 12px;
+    margin: 10px 0;
+}
+
+/* 📱 MOBILE OPTIMIZATION */
+@media (max-width: 600px) {
+
+    h1 {
+        font-size: 12px;
+    }
+
+    .dialogue {
+        font-size: 10px;
+    }
+
+    .btn {
+        font-size: 10px;
+        padding: 12px;
+    }
+
+    #grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+        font-size: 9px;
+    }
+
+    .icon {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FindMyCareer</title>
+
+    <!-- Pixel Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/style.css">
+
+    <!-- Responsive scaling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="app">
+
+    <h1>🌾 FindMyCareer</h1>
+
+    <div class="dialogue">
+        <p id="question">{{ question.question }}</p>
+    </div>
+
+    <div class="buttons">
+        <button class="btn yes" onclick="answer('yes')">YES</button>
+        <button class="btn no" onclick="answer('no')">NO</button>
+    </div>
+
+    <button class="reset-btn" onclick="restart()">RESET</button>
+
+    <div id="grid">
+    {% for c in careers %}
+        <div class="card" data-name="{{ c.name }}">
+            <div class="icon">{{ c.icon }}</div>
+            <div class="name">{{ c.name }}</div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+function answer(choice) {
+    fetch('/answer', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({answer: choice})
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        document.querySelectorAll(".card").forEach(card => {
+            let name = card.dataset.name;
+
+            if (!data.careers?.some(c => c.name === name)) {
+                card.classList.add("fade");
+                setTimeout(() => card.remove(), 200);
+            }
+        });
+
+        if (data.done) {
+            let result = document.getElementById("result");
+            result.innerHTML = "<h2>🏆 Your Careers:</h2>";
+
+            data.careers.forEach(c => {
+                result.innerHTML += `
+                    <div class="result-card">
+                        <div class="icon">${c.icon}</div>
+                        <h3>${c.name}</h3>
+                        <p>${c.desc}</p>
+                        <p>${c.match || 100}% Match</p>
+                    </div>
+                `;
+            });
+
+            document.getElementById("question").innerText = "Game Complete!";
+        } else {
+            document.getElementById("question").innerText = data.question;
+        }
+    });
+}
+
+function restart() {
+    fetch('/reset').then(() => location.reload());
+}
+</script>
+
+</body>
+</html>
