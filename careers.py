@@ -1,35 +1,49 @@
 careers = [
-    {"name": "Software Developer", "tags": ["tech", "math"], "desc": "Build apps and software.", "icon": "💻"},
-    {"name": "Game Developer", "tags": ["tech", "creative"], "desc": "Create video games.", "icon": "🎮"},
-    {"name": "Cybersecurity Analyst", "tags": ["tech"], "desc": "Protect systems from hackers.", "icon": "🔐"},
-    {"name": "Data Analyst", "tags": ["math", "tech"], "desc": "Analyze data and trends.", "icon": "📊"},
+    # TECH / INVESTIGATIVE
+    {"name": "Software Developer", "riasec": {"I": 3, "C": 2}, "desc": "Build software and apps.", "icon": "💻"},
+    {"name": "Data Scientist", "riasec": {"I": 3, "C": 2}, "desc": "Analyze data and trends.", "icon": "📊"},
+    {"name": "Cybersecurity Analyst", "riasec": {"I": 3, "C": 2}, "desc": "Protect systems from threats.", "icon": "🔐"},
+    {"name": "IT Specialist", "riasec": {"I": 2, "C": 2}, "desc": "Maintain computer systems.", "icon": "🖥️"},
 
-    {"name": "Doctor", "tags": ["science", "people"], "desc": "Treat patients.", "icon": "🩺"},
-    {"name": "Nurse", "tags": ["science", "people"], "desc": "Care for patients.", "icon": "💉"},
-    {"name": "Veterinarian", "tags": ["science"], "desc": "Treat animals.", "icon": "🐶"},
-    {"name": "Pharmacist", "tags": ["science"], "desc": "Work with medicine.", "icon": "💊"},
+    # SCIENCE / INVESTIGATIVE
+    {"name": "Doctor", "riasec": {"I": 3, "S": 2}, "desc": "Diagnose and treat patients.", "icon": "🩺"},
+    {"name": "Nurse", "riasec": {"S": 3}, "desc": "Care for patients.", "icon": "💉"},
+    {"name": "Pharmacist", "riasec": {"I": 2, "C": 2}, "desc": "Dispense medications.", "icon": "💊"},
+    {"name": "Biologist", "riasec": {"I": 3}, "desc": "Study living organisms.", "icon": "🧬"},
 
-    {"name": "Teacher", "tags": ["people"], "desc": "Educate students.", "icon": "📚"},
-    {"name": "Counselor", "tags": ["people"], "desc": "Help people emotionally.", "icon": "🧠"},
-    {"name": "Lawyer", "tags": ["people"], "desc": "Work with law.", "icon": "⚖️"},
-    {"name": "Police Officer", "tags": ["people"], "desc": "Protect the community.", "icon": "🚓"},
+    # ENGINEERING / REALISTIC
+    {"name": "Mechanical Engineer", "riasec": {"R": 2, "I": 3}, "desc": "Design machines.", "icon": "⚙️"},
+    {"name": "Civil Engineer", "riasec": {"R": 2, "I": 3}, "desc": "Design infrastructure.", "icon": "🏗️"},
+    {"name": "Electrician", "riasec": {"R": 3}, "desc": "Install electrical systems.", "icon": "🔌"},
+    {"name": "Construction Worker", "riasec": {"R": 3}, "desc": "Build structures.", "icon": "🚧"},
 
-    {"name": "Engineer", "tags": ["math"], "desc": "Design systems.", "icon": "⚙️"},
-    {"name": "Architect", "tags": ["creative", "math"], "desc": "Design buildings.", "icon": "🏗️"},
-    {"name": "Electrician", "tags": ["outdoor"], "desc": "Work with electrical systems.", "icon": "🔌"},
-    {"name": "Construction Worker", "tags": ["outdoor"], "desc": "Build structures.", "icon": "🚧"},
+    # CREATIVE / ARTISTIC
+    {"name": "Graphic Designer", "riasec": {"A": 3}, "desc": "Design visuals.", "icon": "🎨"},
+    {"name": "Musician", "riasec": {"A": 3}, "desc": "Create music.", "icon": "🎵"},
+    {"name": "Actor", "riasec": {"A": 3}, "desc": "Perform in media.", "icon": "🎭"},
+    {"name": "Photographer", "riasec": {"A": 2}, "desc": "Capture images.", "icon": "📷"},
 
-    {"name": "Chef", "tags": ["creative"], "desc": "Cook food.", "icon": "🍳"},
-    {"name": "Artist", "tags": ["creative"], "desc": "Create visual art.", "icon": "🎨"},
-    {"name": "Musician", "tags": ["creative"], "desc": "Create music.", "icon": "🎵"},
-    {"name": "Photographer", "tags": ["creative"], "desc": "Capture photos.", "icon": "📷"},
+    # SOCIAL
+    {"name": "Teacher", "riasec": {"S": 3}, "desc": "Educate students.", "icon": "📚"},
+    {"name": "Counselor", "riasec": {"S": 3}, "desc": "Help people emotionally.", "icon": "🧠"},
+    {"name": "Social Worker", "riasec": {"S": 3}, "desc": "Support communities.", "icon": "🤝"},
+    {"name": "Coach", "riasec": {"S": 2}, "desc": "Train athletes.", "icon": "🏀"},
 
-    {"name": "Farmer", "tags": ["outdoor"], "desc": "Grow crops.", "icon": "🌾"},
-    {"name": "Athlete", "tags": ["outdoor"], "desc": "Play sports.", "icon": "⚽"},
-    {"name": "Pilot", "tags": ["tech"], "desc": "Fly planes.", "icon": "✈️"},
-    {"name": "Truck Driver", "tags": ["outdoor"], "desc": "Transport goods.", "icon": "🚚"},
+    # BUSINESS / ENTERPRISING
+    {"name": "Entrepreneur", "riasec": {"E": 3}, "desc": "Start businesses.", "icon": "💼"},
+    {"name": "Marketing Manager", "riasec": {"E": 3}, "desc": "Promote products.", "icon": "📣"},
+    {"name": "Sales Representative", "riasec": {"E": 3}, "desc": "Sell products/services.", "icon": "🛍️"},
+    {"name": "Real Estate Agent", "riasec": {"E": 2}, "desc": "Sell property.", "icon": "🏠"},
 
-    {"name": "Entrepreneur", "tags": ["creative", "people"], "desc": "Start businesses.", "icon": "💼"},
-    {"name": "Marketing Specialist", "tags": ["creative", "people"], "desc": "Promote products.", "icon": "📣"},
-    {"name": "Journalist", "tags": ["creative", "people"], "desc": "Report news.", "icon": "📰"},
+    # CONVENTIONAL
+    {"name": "Accountant", "riasec": {"C": 3}, "desc": "Manage finances.", "icon": "📊"},
+    {"name": "Office Administrator", "riasec": {"C": 3}, "desc": "Organize operations.", "icon": "📁"},
+    {"name": "Banker", "riasec": {"C": 2}, "desc": "Handle financial services.", "icon": "🏦"},
+    {"name": "Data Entry Specialist", "riasec": {"C": 3}, "desc": "Manage records.", "icon": "⌨️"},
+
+    # OUTDOOR / REALISTIC
+    {"name": "Farmer", "riasec": {"R": 3}, "desc": "Work with crops.", "icon": "🌾"},
+    {"name": "Truck Driver", "riasec": {"R": 3}, "desc": "Transport goods.", "icon": "🚚"},
+    {"name": "Pilot", "riasec": {"R": 2, "I": 2}, "desc": "Fly aircraft.", "icon": "✈️"},
+    {"name": "Firefighter", "riasec": {"R": 2, "S": 2}, "desc": "Respond to emergencies.", "icon": "🚒"}
 ]

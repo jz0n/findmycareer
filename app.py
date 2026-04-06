@@ -1,51 +1,50 @@
 from flask import Flask, render_template, request, jsonify
 from careers import careers
+import random
 
 app = Flask(__name__)
 
-# Question bank (by tag)
-tag_questions = {
-    "people": "Do you enjoy working with people?",
-    "math": "Do you enjoy math and logical thinking?",
-    "creative": "Are you creative?",
-    "outdoor": "Do you like working outdoors?",
-    "science": "Are you interested in science?",
-    "tech": "Do you enjoy technology?"
-}
+# RIASEC Questions
+questions = [
+    {"text": "Do you enjoy building or fixing things?", "type": "R"},
+    {"text": "Do you like working outdoors?", "type": "R"},
 
-# Initialize game state
+    {"text": "Do you enjoy solving problems or puzzles?", "type": "I"},
+    {"text": "Do you like science or research?", "type": "I"},
+
+    {"text": "Are you creative or artistic?", "type": "A"},
+    {"text": "Do you enjoy music or design?", "type": "A"},
+
+    {"text": "Do you enjoy helping people?", "type": "S"},
+    {"text": "Do you like teaching or guiding others?", "type": "S"},
+
+    {"text": "Do you enjoy leading or persuading?", "type": "E"},
+    {"text": "Do you like business or sales?", "type": "E"},
+
+    {"text": "Do you enjoy organizing or working with data?", "type": "C"},
+    {"text": "Do you like structured tasks?", "type": "C"},
+]
+
+
 def new_game():
     return {
-        "scores": {c["name"]: 0 for c in careers},
-        "index": 0,
-        "last_tag": None,
-        "asked_tags": set()
+        "scores": {"R": 0, "I": 0, "A": 0, "S": 0, "E": 0, "C": 0},
+        "asked": [],
+        "current": None
     }
 
 state = new_game()
 
+
 @app.route("/")
 def home():
     global state
-
-    # Reset game state
     state = new_game()
 
-    # Pick best starting tag (most common across careers)
-    tag_counts = {}
-    for c in careers:
-        for tag in c["tags"]:
-            tag_counts[tag] = tag_counts.get(tag, 0) + 1
+    first = random.choice(questions)
+    state["current"] = first
 
-    first_tag = max(tag_counts, key=tag_counts.get)
-
-    # Save it as first question
-    state["last_tag"] = first_tag
-    state["asked_tags"].add(first_tag)
-
-    question = tag_questions.get(first_tag, "Do you enjoy this type of work?")
-
-    return render_template("index.html", careers=careers, question=question)
+    return render_template("index.html", careers=careers, question=first["text"])
 
 
 @app.route("/answer", methods=["POST"])
@@ -55,87 +54,58 @@ def answer():
     data = request.json
     choice = data.get("answer")
 
-    # Apply previous answer
-    if state["last_tag"] is not None:
-        tag = state["last_tag"]
+    current = state["current"]
 
-        for c in careers:
-            if tag in c["tags"]:
-                if choice == "yes":
-                    state["scores"][c["name"]] += 3
-                else:
-                    state["scores"][c["name"]] -= 2
-            else:
-                if choice == "yes":
-                    state["scores"][c["name"]] -= 1
+    # Update scores
+    if choice == "yes":
+        state["scores"][current["type"]] += 2
+    else:
+        state["scores"][current["type"]] -= 1
 
-    # Sort careers
-    sorted_list = sorted(state["scores"].items(), key=lambda x: x[1], reverse=True)
+    state["asked"].append(current)
 
-    # 🎯 STOP: clear winner
-    if len(sorted_list) > 1:
-        gap = sorted_list[0][1] - sorted_list[1][1]
-        if gap >= 8:
-            best_name = sorted_list[0][0]
-            best_career = next(c for c in careers if c["name"] == best_name)
+    # Stop after 8 questions
+    if len(state["asked"]) >= 8:
+        return finish()
 
-            return jsonify({
-                "done": True,
-                "career": best_career
-            })
+    # Remaining questions
+    remaining = [q for q in questions if q not in state["asked"]]
 
-    # 🎯 STOP: max questions
-    if state["index"] >= 10:
-        best_name = sorted_list[0][0]
-        best_career = next(c for c in careers if c["name"] == best_name)
+    if not remaining:
+        return finish()
 
-        return jsonify({
-            "done": True,
-            "career": best_career
-        })
+    # Adaptive: focus on weakest trait
+    weakest = min(state["scores"], key=state["scores"].get)
 
-    # 🎯 Choose best next tag (adaptive)
-    tag_counts = {}
+    options = [q for q in remaining if q["type"] == weakest]
 
-    for c in careers:
-        for tag in c["tags"]:
-            if tag not in state["asked_tags"]:
-                tag_counts[tag] = tag_counts.get(tag, 0) + 1
-
-    # If no tags left → stop
-    if not tag_counts:
-        best_name = sorted_list[0][0]
-        best_career = next(c for c in careers if c["name"] == best_name)
-
-        return jsonify({
-            "done": True,
-            "career": best_career
-        })
-
-    # Pick tag that best splits careers
-    total = len(careers)
-    best_tag = None
-    best_diff = float("inf")
-
-    for tag, count in tag_counts.items():
-        diff = abs((total / 2) - count)
-        if diff < best_diff:
-            best_diff = diff
-            best_tag = tag
-
-    # Save state
-    state["last_tag"] = best_tag
-    state["asked_tags"].add(best_tag)
-    state["index"] += 1
-
-    # Show top careers visually
-    top_names = [c[0] for c in sorted_list[:10]]
-    visible = [c for c in careers if c["name"] in top_names]
+    next_q = random.choice(options if options else remaining)
+    state["current"] = next_q
 
     return jsonify({
         "done": False,
-        "careers": visible,
-        "question": tag_questions.get(best_tag, "Do you enjoy this type of work?")
+        "question": next_q["text"]
+    })
+
+
+def finish():
+    global state
+
+    best = None
+    best_score = -999
+
+    for c in careers:
+        score = 0
+        for t, v in c["riasec"].items():
+            score += state["scores"][t] * v
+
+        if score > best_score:
+            best_score = score
+            best = c
+
+    return jsonify({
+        "done": True,
+        "career": best
     })
 
 
@@ -143,7 +113,7 @@ def answer():
 def reset():
     global state
     state = new_game()
-    return jsonify({"status": "reset"})
+    return jsonify({"ok": True})
 
 
 if __name__ == "__main__":

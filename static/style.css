@@ -3,19 +3,23 @@ body {
     font-family: 'Press Start 2P', cursive;
     background: #87c77b;
     color: #2d2d2d;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;   /* 👈 full screen height */
 }
 
 /* 🎮 MAIN FRAME (UPDATED) */
 .app {
+    flex: 1;  /* 👈 THIS pushes footer down */
+
     max-width: 900px;
-    margin: 40px auto;              /* 👈 adds spacing from edges */
+    margin: 40px auto;
     padding: 20px;
 
-    background: #fff8dc;            /* 👈 gives "inside" feel */
+    background: #fff8dc;
     border: 4px solid black;
-    box-shadow: 6px 6px 0 black;    /* 👈 stronger frame */
-
-    border-radius: 4px;
+    box-shadow: 6px 6px 0 black;
 }
 
 /* Title */
@@ -123,12 +127,13 @@ h1 {
 /* Footer */
 .footer {
     text-align: center;
-    margin-top: 40px;
     padding: 20px;
     font-size: 10px;
+
     background: #fff8dc;
-    border: 3px solid black;
-    box-shadow: 4px 4px 0 black;
+    border-top: 3px solid black;
+
+    width: 100%;
 }
 
 /* 🎮 START SCREEN (center better) */
