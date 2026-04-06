@@ -31,6 +31,7 @@ def answer():
     tag = q["tag"]
     weight = q["weight"]
 
+    # Update scores
     for c in careers:
         tags = c["tags"]
 
@@ -45,22 +46,30 @@ def answer():
 
     state["index"] += 1
 
+    # Sort careers
     sorted_list = sorted(state["scores"].items(), key=lambda x: x[1], reverse=True)
 
     best_name, best_score = sorted_list[0]
+    second_score = sorted_list[1][1]
 
-    total_possible = sum(q["weight"] * 3 for q in questions)
-    confidence = int((best_score / total_possible) * 100)
+    # 🎯 EARLY STOP CONDITION
+    score_gap = best_score - second_score
 
-    best_career = next(c for c in careers if c["name"] == best_name)
-    best_career["match"] = max(0, confidence)
+    # If one career is clearly ahead → stop early
+    if score_gap >= 8 or state["index"] >= len(questions):
 
-    if state["index"] >= len(questions):
+        total_possible = sum(q["weight"] * 3 for q in questions)
+        confidence = int((best_score / total_possible) * 100)
+
+        best_career = next(c for c in careers if c["name"] == best_name)
+        best_career["match"] = max(0, confidence)
+
         return jsonify({
             "done": True,
             "career": best_career
         })
 
+    # Continue asking questions
     top_names = [c[0] for c in sorted_list[:10]]
     filtered = [c for c in careers if c["name"] in top_names]
 

@@ -68,6 +68,13 @@ h1 {
     filter: brightness(1.1);
 }
 
+.reset {
+    background: #2196f3;
+    color: white;
+    font-size: 12px;
+    padding: 12px;
+    margin-top: 10px;
+}
 /* Grid */
 #grid {
     display: grid;
